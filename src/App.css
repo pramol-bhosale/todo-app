@@ -1,38 +1,57 @@
-.App {
+@import url("https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css");
+@font-face {
+  font-family: ClashofClans;
+  
+  src: url("/home/pramol/Downloads/svn_supercell_magic/SVN-Supercell Magic.otf") format("opentype");
+}  
+*{
+  box-sizing: border-box;
+}
+.login-container{
+  background-color:#ecece4;
+}
+
+.login-container .form-body{
+background-color: #ffffff;
+}
+.supercell-font{
+  font-family: "ClashofClans";
+  font-weight: bold;
+}
+.login-container .login-caption{
+  border-bottom: 4px solid #435d72;
+  color: #435d72;
+}
+.login-container button{
+  background-color: #39d425;
+  color: white;
+  font-family: "ClashofClans";
+  font-weight: lighter;
+  font-size: 14px;
+  border:none;
+}
+.home-container {
+  background-color: #ecece4;  
+}
+.home-container .content{
+  background-color: #464642;
+}
+.home-container .home-title{
+  font-family: ClashofClans;
+  font-size: 20px;
+  color: white;
   text-align: center;
 }
-
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.home-container .create-field button{
+ border: none;
+ color: white;
+ background-color: #39d425;
+ border-radius:9px ;
+ font-size: 12px;
+font-family: ClashofClans;
 }
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
+.todo-child .close-btn{
+  border: none;
+  background-color: red;
   color: white;
-}
-
-.App-link {
-  color: #61dafb;
-}
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
 }
