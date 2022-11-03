@@ -1,57 +1,137 @@
 @import url("https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css");
+
 @font-face {
   font-family: ClashofClans;
-  
+  font-weight: lighter;
   src: url("/home/pramol/Downloads/svn_supercell_magic/SVN-Supercell Magic.otf") format("opentype");
-}  
-*{
-  box-sizing: border-box;
-}
-.login-container{
-  background-color:#ecece4;
 }
 
-.login-container .form-body{
-background-color: #ffffff;
+* {
+  box-sizing: border-box;
 }
-.supercell-font{
+
+.login-container {
+  background-color: #ecece4;
+}
+
+.login-container .form-body {
+  background-color: #ffffff;
+}
+
+.supercell-font {
   font-family: "ClashofClans";
   font-weight: bold;
 }
-.login-container .login-caption{
+
+.login-container .login-caption {
   border-bottom: 4px solid #435d72;
   color: #435d72;
 }
-.login-container button{
+
+.login-container button {
   background-color: #39d425;
   color: white;
   font-family: "ClashofClans";
   font-weight: lighter;
   font-size: 14px;
-  border:none;
+  border: none;
 }
+
 .home-container {
-  background-color: #ecece4;  
+  font-family: ClashofClans;
+  background-color: #ecece4;
 }
-.home-container .content{
+
+.home-container .content {
   background-color: #464642;
 }
-.home-container .home-title{
+.home-container input{
+  font-size: 12px;
+  color: black;
+}
+.home-container .home-title {
   font-family: ClashofClans;
   font-size: 20px;
   color: white;
   text-align: center;
 }
-.home-container .create-field button{
- border: none;
- color: white;
- background-color: #39d425;
- border-radius:9px ;
- font-size: 12px;
-font-family: ClashofClans;
-}
-.todo-child .close-btn{
+.home-container .logout-btn{
   border: none;
-  background-color: red;
+  background-color: #8d8d8a;
   color: white;
+}
+.home-container .create-field button {
+  border: none;
+  color: white;
+  background-color: #39d425;
+  border-radius: 9px;
+  font-size: 12px;
+  font-family: ClashofClans;
+}
+
+.todo-parent {
+  background-color: #ffffff;
+}
+
+.todo-child button {
+  border: 0.5px solid grey;
+  font-family: ClashofClans;
+  font-size: 9px;
+  text-align: center;
+  
+}
+
+.todo-child .close-btn {
+  
+  background-color: #32c12c;
+  color: white;
+  background: #cf5e6b;  /* fallback for old browsers */
+  /* background: -webkit-linear-gradient(to left, #93291E, #ED213A);  Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(to left, #df1e08, #fa2e46); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+  }
+
+.todo-child .done-btn {
+
+  background-color: #32c12c;
+  color: white;
+  background: rgb(12, 150, 14);
+  background: linear-gradient(275deg, rgba(6, 211, 10, 0.984) 20%, rgba(61, 232, 26, 0.9500175070028011) 61%);
+}
+
+.todo-child .edit-btn {
+
+  /* background-color: #32c12c; */
+  color: white;
+  background: #4e54c8;  /* fallback for old browsers */
+background: -webkit-linear-gradient(to left, #8f94fb, #4e54c8);  /* Chrome 10-25, Safari 5.1-6 */
+background: linear-gradient(to left, #8f94fb, #4e54c8); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+}
+
+.todo-parent {
+  height: 350px;
+
+  overflow-y: scroll;
+}
+
+::-webkit-scrollbar {
+  width: 2px;
+}
+
+.todo-parent .todo-child {
+  background-color: white;
+  border: 1px solid grey;
+  -webkit-box-shadow: 7px 7px 15px -5px rgba(227,227,227,0.69);
+-moz-box-shadow: 7px 7px 15px -5px rgba(227,227,227,0.69);
+box-shadow: 7px 7px 15px -5px rgba(227,227,227,0.69);
+}
+
+
+::-webkit-scrollbar-thumb {
+  border-radius: 10px;
+  box-shadow: inset 0 0 14px rgba(0, 0, 0, 0.5);
+}
+
+.todo-child .child-title {
+  font-family: ClashofClans;
+  font-size: 12px;
 }
