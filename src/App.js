@@ -1,28 +1,38 @@
 
-import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import { useContext } from 'react';
+import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
 import './App.css';
-import Navbar from './components/Navbar';
-import { AuthContextProvider } from './context/AuthContext';
-import { ProtectedRoute } from './context/ProtectedContext';
-import { UserContextProvider } from './context/UserContext';
+import { UserContext, UserContextProvider } from './context/UserContext';
 import Home from './pages/Home';
 import Login from './pages/Login';
 import Register from './pages/Register';
 
 function App() {
-  
+  const {currentUser} = useContext(UserContext)
+  const ProtectedRoute = ({children})=>{
+        console.log(currentUser)
+       if(currentUser){
+        console.log("from protected route with object")
+        console.log(currentUser)
+        return children;
+        
+      }
+      console.log("from outside the protected route")
+      console.log(currentUser)
+      return (<Navigate to="/login"/>) 
+  }
   return (
-    <UserContextProvider>
+    
         <BrowserRouter>
           <Routes>
             <Route path='/'>
-                <Route index element={  <ProtectedRoute> </ProtectedRoute>} />
+                <Route index element={  <ProtectedRoute> <Home/></ProtectedRoute>} />
               <Route path='login' element={<Login />} />
               <Route path='register' element={<Register />} />
             </Route>
           </Routes>
         </BrowserRouter>
-    </UserContextProvider>
+    //</UserContextProvider>
   );
 }
 

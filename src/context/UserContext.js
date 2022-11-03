@@ -15,10 +15,11 @@ export const UserContext = createContext();
 // }
 export const UserContextProvider = ({ children }) => {
     const [currentUser, setCurrentUser]=useState(null)
-    const initialValue=null;
    useEffect(()=>{
      const demo=onAuthStateChanged(auth, (user)=>{
-          setCurrentUser(user);
+        console.log("authentication changed")
+        setCurrentUser(user)
+        console.log(user)
      })
 
      return()=>{
@@ -27,7 +28,7 @@ export const UserContextProvider = ({ children }) => {
    },[]);
     // const [currentUser, dispatch] = useReducer(reducer, initialValue)
     return (
-        <UserContext.Provider value={{ currentUser }}>
+        <UserContext.Provider value={{ currentUser, setCurrentUser }}>
             {children}
         </UserContext.Provider>
     );
