@@ -1,32 +1,55 @@
 
-import { useContext } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
 import './App.css';
-import { UserContext, UserContextProvider } from './context/UserContext';
+import Loading from './components/Loading';
+import { UserContext} from './context/UserContext';
 import Home from './pages/Home';
 import Login from './pages/Login';
 import Register from './pages/Register';
 
 function App() {
+  const[flag, setFlag]=useState(0)
   const {currentUser} = useContext(UserContext)
-  const ProtectedRoute = ({children})=>{
-        console.log(currentUser)
+  useEffect(()=>{
+    setFlag(prev=> prev+1);
+    console.log("authantication changed and now current user have content in it ")
+     ProtectedRoute();
+  },[currentUser]);
+  console.log("before the protected route method call ");
+  const ProtectedRoute =function (){
+    console.log("in the protected route mehtod")
+   
+    console.log(currentUser)
        if(currentUser){
         console.log("from protected route with object")
         console.log(currentUser)
-        return children;
+        return (
+          <Home/>
+        );
         
+      }
+      if(flag != 2){
+        return (
+          <Loading/>
+        )
+      }
+      else{
+        return (<Navigate to="/login"/>) 
       }
       console.log("from outside the protected route")
       console.log(currentUser)
-      return (<Navigate to="/login"/>) 
+      
+
   }
+
+  console.log("after the protected route method")
   return (
     
         <BrowserRouter>
           <Routes>
             <Route path='/'>
-                <Route index element={  <ProtectedRoute> <Home/></ProtectedRoute>} />
+                <Route index element={  <ProtectedRoute></ProtectedRoute>} />
               <Route path='login' element={<Login />} />
               <Route path='register' element={<Register />} />
             </Route>
