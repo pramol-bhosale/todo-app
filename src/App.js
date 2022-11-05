@@ -13,16 +13,12 @@ function App() {
   const {currentUser} = useContext(UserContext)
   useEffect(()=>{
     setFlag(prev=> prev+1);
-    console.log("authantication changed and now current user have content in it ")
-     ProtectedRoute();
+    ProtectedRoute();
   },[currentUser]);
-  console.log("before the protected route method call ");
+ 
   const ProtectedRoute =function (){
-    console.log("in the protected route mehtod")
-   
     console.log(currentUser)
        if(currentUser){
-        console.log("from protected route with object")
         console.log(currentUser)
         return (
           <Home/>
@@ -30,6 +26,7 @@ function App() {
         
       }
       if(flag != 2){
+        console.log(flag)
         return (
           <Loading/>
         )
@@ -37,13 +34,10 @@ function App() {
       else{
         return (<Navigate to="/login"/>) 
       }
-      console.log("from outside the protected route")
-      console.log(currentUser)
       
 
   }
 
-  console.log("after the protected route method")
   return (
     
         <BrowserRouter>
@@ -55,7 +49,6 @@ function App() {
             </Route>
           </Routes>
         </BrowserRouter>
-    //</UserContextProvider>
   );
 }
 

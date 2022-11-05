@@ -1,17 +1,15 @@
-import React, { useContext, useEffect, useRef, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom';
 import { auth, db } from '../firebase'
 import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
-import { UserContext } from '../context/UserContext';
 import { doc, setDoc } from 'firebase/firestore';
-// import img1 from './images/img1.jpg'
 function Register() {
     const [email, setEmail] = useState("")
     const [username, setUsername] = useState("")
     const [password, setPassword] = useState("")
     const emailRef = useRef(null);
+    const [err, setError]=useState("")
     const navigate = useNavigate()
-    const { currentUser, dispatch } = useContext(UserContext)
     const handleRegister = async (e) => {
         console.log("form submitted")
         e.preventDefault();
@@ -19,43 +17,35 @@ function Register() {
             .then((userCredential) => {
 
                 const user = userCredential.user;
-                console.log(user.displayName);
+                //update the displayName of the user
                 updateProfile(user, {
                     displayName: username
                 }).then(async () => {
                     // Profile updated!
-                    // console.log("Profile updated")
-                    console.log(user.displayName)
-                  
+                    //create document for the new user with user uid (unique)
                     setDoc(doc(db, "todolist", user.uid), {
-                         todolist:[]
+                        
                     }).then((result)=>{
-                        console.log("record created");
+                      //  console.log("record created");
                     }).catch((error)=>{
-                        console.log("error during record insertion")
                         console.log(error)
+                        //console.log("error during record insertion")
+                        //console.log(error)
                     });
-
-                    // dispatch({
-                    //     type: "ASSIGN_USER",
-                    //     payload: user
-                    // })
-
 
                     navigate("/");
                 }).catch((error) => {
-                    // An error occurred
-                    // ...
+                    console.log(error)
+                    //An error occured
                 });
 
             })
             .catch((error) => {
-                console.log(error);
-                // ..
+                
+               setError(error.code.substring(5,error.code.length).replace(/-/g, " "))
+                //An error handling mechanism
             });
     }
-
-
 
     useEffect(() => {
         emailRef.current.focus();
@@ -85,7 +75,15 @@ function Register() {
                             <button type="submit" className='mt-3 w-100 rounded-2 p-3'>Register</button>
                         </form>
                         <div className='mt-3 text-center'>
-                            {/* <span className='d-block'>Something went Wrong! </span> */}
+                            
+
+                            {
+                                err ?
+                                    <div className='mb-2' style={{ color: "red" }}>
+                                        {err}
+                                    </div>
+                                    : null
+                            }
                             Already have account? <Link to="/login">Login</Link>
                         </div>
                     </div>

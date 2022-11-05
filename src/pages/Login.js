@@ -1,47 +1,31 @@
-import React, { useContext, useEffect, useRef, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { signInWithEmailAndPassword } from 'firebase/auth';
 import { auth } from '../firebase'
 import { Link, useNavigate } from 'react-router-dom';
-import { UserContext } from '../context/UserContext';
-// import img1 from './images/img1.jpg'
 function Login() {
     const emailRef = useRef(null)
     const navigate = useNavigate();
-    const { dispatch } = useContext(UserContext)
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
-    const [error, setError] = useState(false)
+    const [error, setError] = useState("")
 
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
             await signInWithEmailAndPassword(auth, email, password)
                 .then((userCredential) => {
-
-                    const user = userCredential.user;
-                    // dispatch({
-                    //     type: "ASSIGN_USER",
-                    //     payload: user
-                    // });
-
                     navigate("/");
                 })
                 .catch((error) => {
-                    console.log(error);
-                    setError(true)
+                    setError(error.code.substring(5,error.code.length).replace(/-/g, " "))
                 });
         } catch (err) {
-            console.log("something went wrong \n".error);
+            setError(true)
+            //console.log("something went wrong \n".error);
         }
 
 
     }
-
-
-
-
-
-
     useEffect(() => {
         emailRef.current.focus();
     }, [])
@@ -51,7 +35,7 @@ function Login() {
                 <div className='col-10 col-md-6 row gx-0 justify-content-center form-body p-5 rounded-4'>
                     <div className='col-12 col-lg-10'>
                         <div className='text-center mb-4'>
-                            <span className='login-caption pb-2 supercell-font'>To Do App</span>
+                            <span className='login-caption pb-2 supercell-font'>To Do</span>
                         </div>
                         <form className='form' onSubmit={(e) => { handleSubmit(e) }}>
                             <div className='form-floating mt-3'>
@@ -68,7 +52,7 @@ function Login() {
                             {
                                 error ?
                                     <div className='mb-2' style={{ color: "red" }}>
-                                        Something went Wrong!1!
+                                        {error}
                                     </div>
                                     : null
                             }

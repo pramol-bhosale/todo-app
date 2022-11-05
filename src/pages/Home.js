@@ -1,34 +1,64 @@
 import { signOut } from 'firebase/auth';
-import React, { useContext, useState } from 'react'
+import { doc, onSnapshot, serverTimestamp, updateDoc } from 'firebase/firestore';
+import React, { useContext, useEffect, useMemo, useState } from 'react'
 import TaskItem from '../components/TaskItem'
 import { UserContext } from '../context/UserContext'
-import { auth } from '../firebase';
-
+import { auth, db } from '../firebase';
+import {v4 as uuid} from 'uuid'
+import Loading from '../components/Loading';
 function Home() {
-    const {currentUser, setCurrentUser}=useContext(UserContext);
+    const {currentUser}=useContext(UserContext);
     const [task, setTask]=useState("")
+    const [taskList, setTaskList]=useState([])
+    const [list, setList]=useState(<Loading/>)
+      
+    //handle the logout functionality
     const handleLogout=()=>{
-    // setCurrentUser(null)
-     signOut(auth).then(() => {
-      console.log("successfully logged out from it");
+       signOut(auth).then(() => {
+     // console.log("successfully logged out from it");
 
 }).catch((error) => {
   // An error happened.
-  console.log("error during logging out");
+  //console.log("error during logging out");
 });
-        // dispatch({
-        //     type:"LOGOUT",
-        //     payload:null
-        // })
+
     }
-    const handleAdd=()=>{
-        if(task){
+    
+    const handleAdd=async()=>{
+        if(task===""){
             alert("please enter something !!")
+            return ;
         }
-        else{
-            console.log("task added");
-        }
+        const todoRef = doc(db, "todolist", currentUser.uid);
+      
+        const id=uuid();
+        await updateDoc(todoRef, {
+           [id+".content"]: task,
+           [id+".status"]:"Pending",
+           [id+".date"]:serverTimestamp()
+            }).then(()=>{
+           // console.log("Task added successfully");
+        }).catch((error)=>{
+            //console.log("error occured during the insertion of the ");
+        });
     }
+    useEffect(()=>{
+        const unsub = onSnapshot(doc(db, "todolist", currentUser.uid),(doc) => {
+            setTaskList(doc.data());
+        });
+      return ()=>{
+        unsub(); 
+      }
+
+    },[currentUser]);
+    useMemo(() =>{
+        setList(Object.entries(taskList).map((element)=>{
+           if(element[1].status!=="Removed"){
+               return  <TaskItem element={element[1]} key={element[0]} _id={element[0]}/>
+           }
+           return <></>
+        }))
+    }, [taskList])
     return (
         <div className='row gx-0 home-container vh-100 justify-content-center align-items-center'>
             <div className='col-10 col-md-7 row gx-0 content rounded-3 '>
@@ -40,7 +70,7 @@ function Home() {
 
                 <div className='col-12 row gx-0 create-field justify-content-evenly align-items-center mb-4 '>
                     <div className='form-floating col-7'>
-                        <input type="text" id="new" placeholder='Create new ToDo' className='form-control' />
+                        <input type="text" id="new" placeholder='Create new ToDo' className='form-control' onChange={(e)=>{setTask(e.target.value); console.log(task)}}/>
                         <label htmlFor="new">Task</label>
                     </div>
                     <div className='col-3'>
@@ -51,8 +81,8 @@ function Home() {
 
                 <div className=' todo-parent mt-2'>
 
-                    <TaskItem />
-
+                    {list}
+                    
                 </div>
 
             </div>
