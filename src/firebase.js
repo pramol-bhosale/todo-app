@@ -6,13 +6,14 @@ import { getFirestore } from "firebase/firestore";
 // https://firebase.google.com/docs/web/setup#available-libraries
 
 // Your web app's Firebase configuration
+//you get following keys and id when you create project on firebase 
 const firebaseConfig = {
-  apiKey: "AIzaSyBFIuv0_m4m3a9S3HIcSfVUKJcFVQ7i9mA",
-  authDomain: "todo-app-a178b.firebaseapp.com",
-  projectId: "todo-app-a178b",
-  storageBucket: "todo-app-a178b.appspot.com",
-  messagingSenderId: "787634218769",
-  appId: "1:787634218769:web:aa1442ddd0f223d73e4eb0"
+  apiKey: "<your api key>",
+  authDomain: "<your auth domain>",
+  projectId: "<your project id>",
+  storageBucket: "<your storage bucket>",
+  messagingSenderId: "<senderid>",
+  appId: "<appid>"
 };
 
 // Initialize Firebase
